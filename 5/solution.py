@@ -7,7 +7,7 @@ class Solution(object):
         ttl_length = len(s)
         ans_length = 1
         ans = s[0]
-        for index, value in enumerate(s):
+        for index in range(ttl_length):
             length = 0
             while index - length >=0 and index + length < ttl_length:
                 if s[index-length] != s[index+length]: break
