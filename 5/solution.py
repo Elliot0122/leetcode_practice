@@ -10,26 +10,19 @@ class Solution(object):
         for index, value in enumerate(s):
             length = 0
             while index - length >=0 and index + length < ttl_length:
-                if s[index-length] == s[index+length]:
-                    length+=1
-                else:
-                    break
+                if s[index-length] != s[index+length]: break
+                length+=1 
             length-=1
             if ans_length < length*2+1:
                 ans_length = length*2+1
                 ans = s[index-length:index+length+1]
                 
             length = 0
-            flag = False
             if ttl_length > 1:
                 while index - length >= 0 and index + length + 1 < ttl_length:
-                    if s[index-length] == s[index+length+1]:
-                        length+=1
-                        if not flag:
-                            flag = True
-                    else:
-                        break
-                if flag and ans_length < length*2:
+                    if s[index-length] != s[index+length+1]: break
+                    length+=1
+                if ans_length < length*2:
                     ans_length = length*2
                     ans = s[index-length+1:index+length+1]
         return ans
