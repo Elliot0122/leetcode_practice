@@ -11,9 +11,9 @@ class Solution(object):
         dp = [False] * size
         dp[0] = True
         
-        for j in range(minimum, size):
-            for i in range(minimum, maximum):
-                dp[j] = dp[j] or (dp[j-i] and s[j-i:j] in wordDict)
+        for i in range(minimum, size):
+            for j in range(minimum, maximum):
+                dp[i] = dp[i] or (dp[i-j] and s[i-j:i] in wordDict)
         
         
         return dp[size-1]
