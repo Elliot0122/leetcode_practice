@@ -6,7 +6,6 @@ class Solution(object):
         :rtype: bool
         """
         size = len(s)+1
-        n = len(wordDict)
         minimum = len(min(wordDict, key = len))
         maximum = len(max(wordDict, key = len))+1
         dp = [False] * size
