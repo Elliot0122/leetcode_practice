@@ -1,17 +1,13 @@
-class Solution(object):
-    def productExceptSelf(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[int]
-        """
-        length = len(nums)
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        output = [1]*len(nums)
         temp = 1
-        ans = [ 1 for i in nums]
-        for index, value in enumerate(nums):
-            ans[index] *= temp
-            temp *= value
+        for i in range(len(nums)):
+            output[i]*=temp
+            temp*=nums[i]
         temp = 1
-        for index in range(length-1, -1, -1):
-            ans[index] *= temp
-            temp *= nums[index]
-        return ans
+        for i in range(len(nums)-1, -1, -1):
+            output[i]*=temp
+            temp*=nums[i]
+
+        return output
