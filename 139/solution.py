@@ -1,19 +1,16 @@
-class Solution(object):
-    def wordBreak(self, s, wordDict):
-        """
-        :type s: str
-        :type wordDict: List[str]
-        :rtype: bool
-        """
-        size = len(s)+1
-        minimum = len(min(wordDict, key = len))
-        maximum = len(max(wordDict, key = len))+1
-        dp = [False] * size
-        dp[0] = True
-        
-        for i in range(minimum, size):
-            for j in range(minimum, maximum):
-                dp[i] = dp[i] or (dp[i-j] and s[i-j:i] in wordDict)
-        
-        
-        return dp[size-1]
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordLen = set()
+        for i in wordDict:
+            wordLen.add(len(i))
+        dp = [True] + [False]*len(s)
+        wordDict = set(wordDict)
+        wordLen = list(wordLen)
+
+        for i in range(1, len(s)+1):
+            for j in wordLen:
+                start = i-j
+                if start >= 0 and dp[start] and s[start:i] in wordDict:
+                    dp[i] = True
+
+        return dp[-1]
