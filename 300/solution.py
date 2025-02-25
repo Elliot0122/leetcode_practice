@@ -1,28 +1,26 @@
-class Solution(object):
-    def lengthOfLIS(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        dp = [nums[0]]
-        for i in nums:
-            if i < dp[0]:
-                dp[0] = i
-            elif i > dp[-1]:
-                dp.append(i)
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        res = []
+
+        def binary_search(res, n):
+            left = 0
+            right = len(res)-1
+            while left <= right:
+                mid = (left+right)//2
+                if res[mid] == n:
+                    return mid
+                elif res[mid] > n:
+                    right = mid-1
+                else:
+                    left = mid+1
+
+            return left
+
+        for i in range(len(nums)):
+            if not res or nums[i]>res[-1]:
+                res.append(nums[i])
             else:
-                dp[self.binary_search(dp, i)] = i
-        return len(dp)
-            
-    def binary_search(self, nums, target):
-        if len(nums) == 0:
-            return 0
-        start = 0
-        end = len(nums)-1
-        while start < end:
-            mid = (start+end)/2
-            if nums[mid] < target:
-                start = mid+1
-            else:
-                end = mid
-        return end
+                temp = binary_search(res, nums[i])
+                res[temp] = nums[i]
+
+        return len(res)
