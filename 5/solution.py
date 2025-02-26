@@ -1,30 +1,21 @@
-class Solution(object):
-    def longestPalindrome(self, s):
-        """
-        :type s: str
-        :rtype: str
-        """
-        ttl_length = len(s)
-        ans_length = 1
-        ans = s[0]
-        if ttl_length == 1:
-            return s
-        
-        for index in range(ttl_length):
-            length = 0
-            while index - length >=0 and index + length < ttl_length:
-                if s[index-length] != s[index+length]: break
-                length+=1 
-            length-=1
-            if ans_length < length*2+1:
-                ans_length = length*2+1
-                ans = s[index-length:index+length+1]
-                
-            length = 0
-            while index - length >= 0 and index + length + 1 < ttl_length:
-                if s[index-length] != s[index+length+1]: break
-                length+=1
-            if ans_length < length*2:
-                ans_length = length*2
-                ans = s[index-length+1:index+length+1]
-        return ans
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        def check_palindrome(s, left, right):
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return right-left-1
+
+        start = 0
+        end = 0
+        for i in range(len(s)):
+            odd = check_palindrome(s, i, i)
+            even = check_palindrome(s, i, i+1)
+
+            max_len = max(odd, even)
+
+            if max_len > end-start:
+                start = i-(max_len-1)//2
+                end = i+ max_len//2
+
+        return s[start: end+1]
