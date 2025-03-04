@@ -1,24 +1,29 @@
-class Solution(object):
-    def threeSum(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        if len(nums) < 3:
-            return []
-        
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) == 3:
+            if sum(nums) == 0:
+                return [nums]
+            else:
+                return []
+
         nums.sort()
-        ans = set()
-        for i in range(len(nums)-2):
-            target = -nums[i]
-            if target < 0:
-                break
-            dic = {}
-            for j in range(i+1, len(nums)):
-                if target-nums[j] in dic:
-                    ans.add((nums[i], target-nums[j], nums[j]))
+        ans = []
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+
+            j = i+1
+            k = len(nums)-1
+            while j<k:
+                temp = nums[i]+nums[j]+nums[k]
+                if temp > 0:
+                    k -= 1
+                elif temp < 0:
+                    j += 1
                 else:
-                    dic[nums[j]] = j
+                    ans.append([nums[i], nums[j], nums[k]])
+                    j += 1
+                    while nums[j] == nums[j-1] and j < k:
+                        j += 1
+
         return ans
-        
-        
