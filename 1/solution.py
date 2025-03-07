@@ -1,13 +1,8 @@
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        numdict = {}
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        occur = defaultdict()
         for i in range(len(nums)):
-            if target-nums[i] in numdict:
-                return [numdict[target-nums[i]], i]
+            if nums[i] not in occur:
+                occur[target-nums[i]] = i
             else:
-                numdict[nums[i]] = i
+                return [occur[nums[i]], i]
